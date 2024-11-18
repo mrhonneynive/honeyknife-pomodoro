@@ -45,6 +45,19 @@ function pauseTimer() {
   isRunning = false;
   clearInterval(timer);
 }
-
+/*
+  TODO:
+  FIGURE OUT HOW TO RESUME
+*/
 const pauseButton = document.getElementById("pause");
 pauseButton.addEventListener("click", pauseTimer);
+
+// reset functionality
+function resetTimer() {
+  isRunning = false;
+  clearInterval(timer);
+  timeLeft = 10 * 60;
+  updateTimerDisplay();
+}
+const resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", resetTimer);
