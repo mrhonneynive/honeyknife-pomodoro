@@ -39,3 +39,12 @@ function startTimer() {
 
 const startButton = document.getElementById("start");
 startButton.addEventListener("click", startTimer);
+
+// pause functionality
+function pauseTimer() {
+  isRunning = false;
+  clearInterval(timer);
+}
+
+const pauseButton = document.getElementById("pause");
+pauseButton.addEventListener("click", pauseTimer);
