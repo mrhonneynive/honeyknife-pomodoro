@@ -44,9 +44,9 @@ function startTimer() {
         timeLeft = breakDuration;
       }
 
-      breakIdeasDisplay.innerHTML(
-        `<p> ${isWork ? "work time!" : "break time!"} </p>`
-      );
+      breakIdeasDisplay.innerHTML = `<p> ${
+        isWork ? "work time!" : "break time!"
+      } </p>`;
       updateTimerDisplay();
     }
   }, 1000);
@@ -61,8 +61,9 @@ function pauseTimer() {
   clearInterval(timer);
 }
 /*
-  TODO:
-  FIGURE OUT HOW TO RESUME
+  figured out how to resume
+  NEW TODO:
+  FIGURE OUT HOW TO COMBINE START AND PAUSE
 */
 const pauseButton = document.getElementById("pause");
 pauseButton.addEventListener("click", pauseTimer);
