@@ -29,6 +29,7 @@ function startTimer() {
   }
 
   isRunning = true;
+  breakIdeasDisplay.innerHTML = "<p>work time!<p>";
   timer = setInterval(() => {
     if (timeLeft > 0) {
       timeLeft--;
