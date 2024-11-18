@@ -16,6 +16,10 @@ updateTimerDisplay();
 
 let timer;
 let isRunning = false;
+let isWork = true;
+const workDuration = 10 * 60;
+const breakDuration = 1 * 60;
+const breakIdeasDisplay = document.getElementById("breakIdeas");
 
 function startTimer() {
   if (isRunning) {
@@ -32,7 +36,18 @@ function startTimer() {
     } else {
       clearInterval(timer);
       isRunning = false;
-      alert("time's up");
+
+      isWork = !isWork;
+      if (isWork) {
+        timeLeft = workDuration;
+      } else {
+        timeLeft = breakDuration;
+      }
+
+      breakIdeasDisplay.innerHTML(
+        `<p> ${isWork ? "work time!" : "break time!"} </p>`
+      );
+      updateTimerDisplay();
     }
   }, 1000);
 }
