@@ -11,3 +11,31 @@ function updateTimerDisplay() {
 }
 
 updateTimerDisplay();
+
+// timer functionality
+
+let timer;
+let isRunning = false;
+
+function startTimer() {
+  if (isRunning) {
+    return;
+  } else {
+    // do nothing
+  }
+
+  isRunning = true;
+  timer = setInterval(() => {
+    if (timeLeft > 0) {
+      timeLeft--;
+      updateTimerDisplay();
+    } else {
+      clearInterval(timer);
+      isRunning = false;
+      alert("time's up");
+    }
+  }, 1000);
+}
+
+const startButton = document.getElementById("start");
+startButton.addEventListener("click", startTimer);
