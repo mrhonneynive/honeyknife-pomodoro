@@ -1,4 +1,6 @@
-let timeLeft = 1 * 10;
+const WORK_DURATION = 10 * 60;
+const BREAK_DURATION = 1 * 60;
+let timeLeft = WORK_DURATION;
 
 const minutesDisplay = document.getElementById("minutes");
 const secondsDisplay = document.getElementById("seconds");
@@ -10,16 +12,10 @@ function updateTimerDisplay() {
   secondsDisplay.textContent = seconds.toString().padStart(2, "0");
 }
 
-updateTimerDisplay();
-
 // timer functionality
-
 let timer;
 let isRunning = false;
 let isWork = true;
-const workDuration = 10 * 60;
-const breakDuration = 1 * 60;
-const breakIdeasDisplay = document.getElementById("breakIdeas");
 
 function startTimer() {
   if (isRunning) {
@@ -40,10 +36,16 @@ function startTimer() {
       isWork = !isWork;
       if (isWork) {
         clearBreakIdeas();
-        timeLeft = workDuration;
+
+        timeLeft = WORK_DURATION;
       } else {
         showBreakIdeas();
-        timeLeft = breakDuration;
+
+        if (backgroundMusicDisplay.play) {
+          toggleMusic();
+        }
+
+        timeLeft = BREAK_DURATION;
       }
       updateTimerDisplay();
     }
@@ -52,6 +54,7 @@ function startTimer() {
 
 const startButton = document.getElementById("start");
 startButton.addEventListener("click", startTimer);
+startButton.addEventListener("click", toggleMusic);
 
 // pause functionality
 function pauseTimer() {
@@ -77,7 +80,6 @@ const resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", resetTimer);
 
 // add music functionality
-
 const backgroundMusicDisplay = document.getElementById("backgroundMusic");
 const toggleMusicButton = document.getElementById("toggleMusic");
 function toggleMusic() {
@@ -89,35 +91,29 @@ function toggleMusic() {
     toggleMusicButton.textContent = "Play Music";
   }
 }
-
 toggleMusicButton.addEventListener("click", toggleMusic);
 
+const breakIdeasDisplay = document.getElementById("breakIdeas");
 const breakIdeas = {
   Physical: [
-    "Stretch your neck and shoulders",
-    "Do a few jumping jacks or squats",
-    "Roll your wrists or ankles to relieve tension",
+    "Stretch neck, shoulders, wrists, ankles",
+    "Walk briskly and use stairs",
     "Stand and do a quick forward fold to touch your toes",
-    "Shake out your arms and legs to release energy",
+    "Blow your nose",
   ],
   Mental: [
-    "Close your eyes and take deep breaths",
-    "Try a 1-minute mindfulness meditation",
-    "Visualize a calm or happy place",
-    "Look at something distant to relax your eyes",
-    "Recite an affirmation or a motivating thought",
+    "Get away from your desk and visualize success",
+    "Get away from your desk, close your eyes and take deep breaths",
   ],
   Sensory: [
-    "Step to a window and look outside",
+    "Step to a window and look at something distant",
     "Drink a sip of water mindfully, savoring it",
-    "Lightly massage your temples or hands.",
-    "Rub your palms together and feel the warmth.",
+    "Stand up and massage your temples and nasal bridge",
   ],
   Productivity: [
-    "Write down one thing you're grateful for",
-    "Review your next task to mentally prepare",
-    "Clear one small item off your desk",
-    "Quickly organize and declutter something near you",
+    "Stand up and write down one thing you're grateful for",
+    "Stand up and review your next task to mentally prepare",
+    "Stand up, organize and declutter something near you",
     "Jot down any distracting thoughts to address later",
   ],
 };
