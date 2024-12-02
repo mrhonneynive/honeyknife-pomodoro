@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import BreakIdeas from "./BreakIdea";
+import Affirmations from "./Affirmations";
 
 const Timer = () => {
   const workDuration = 1 * 6;
@@ -30,10 +31,52 @@ const Timer = () => {
   };
   const breakCategories = Object.keys(breakIdeas);
 
+  const affirmations = [
+    "What can I do in this session that can help me get closer to my goal",
+    "If I don't know it, I ask for help",
+    "I am allowed to do Anki in class",
+    "I am allowed to read books in class",
+    "I am allowed to study Qazaq in class",
+    "I am independent",
+    "I am willing to walk away from anything",
+    "Seeking the best is the problem",
+    "I am intentional",
+    "I am content with what I have",
+    "I have no regrets",
+    "I know I cannot get everything in life",
+    "I seek only my approval",
+    "I know my worth",
+    "I am kind to myself",
+    "I improve daily",
+    "I maintain balance",
+    "I enjoy the journey",
+    "I complete my Anki cards",
+    "I act without permission",
+    "Asking for forgiveness is easier",
+    "I am proactive",
+    "I make plans",
+    "I invite people",
+    "I build friendships",
+    "I build memories",
+    "I play tennis",
+    "I train in the gym",
+    "I sit straight as if a string pulls my head up",
+    "I embrace hard work",
+    "I will take my mom to Hajj",
+    "I work for a better future for my family",
+  ];
+  const getRandomAffirmations = () => {
+    const shuffledAffirmations = [...affirmations].sort(
+      () => 0.5 - Math.random()
+    );
+    return shuffledAffirmations.slice(0, 3);
+  };
+
   const [timeLeft, setTimeLeft] = useState(workDuration);
   const [isRunning, setIsRunning] = useState(false);
   const [isWork, setIsWork] = useState(true);
   const [breakIdea, setBreakIdea] = useState("");
+  const [selectedAffirmations, setSelectedAffirmations] = useState([]);
 
   useEffect(() => {
     let timer;
@@ -56,11 +99,15 @@ const Timer = () => {
               const randomIdea =
                 ideas[Math.floor(Math.random() * ideas.length)];
               setBreakIdea(`${randomCategory}: ${randomIdea}`);
+
               return breakDuration;
             } else {
               setIsWork(true);
 
               setBreakIdea("");
+
+              setSelectedAffirmations(getRandomAffirmations());
+
               return workDuration;
             }
           }
@@ -75,6 +122,7 @@ const Timer = () => {
     setIsRunning(false);
     setTimeLeft(workDuration);
     setIsWork(true);
+    setSelectedAffirmations(getRandomAffirmations());
   };
 
   const minutes = Math.floor(timeLeft / 60);
@@ -83,6 +131,7 @@ const Timer = () => {
   return (
     <div className="flex flex-col items-center p-4">
       {/* timer display */}
+      <div className="mt-2 text-xl">{isWork ? "Work Time" : "Break Time"}</div>
       <div className="text-4xl font-mono">
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
       </div>
@@ -108,7 +157,11 @@ const Timer = () => {
       {/* buttons */}
 
       {/* break ideas */}
-      {!isWork ? <BreakIdeas idea={breakIdea} /> : null}
+      {!isWork ? (
+        <BreakIdeas idea={breakIdea} />
+      ) : (
+        <Affirmations affirmations={selectedAffirmations} />
+      )}
       {/* break ideas */}
     </div>
   );
