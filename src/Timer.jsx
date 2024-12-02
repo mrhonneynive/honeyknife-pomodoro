@@ -6,7 +6,7 @@ import endChime from "../public/deathChime.mp3";
 const Timer = () => {
   // during dev era
   const workDuration = 10 * 60;
-  const breakDuration = 10 * 60;
+  const breakDuration = 1 * 60;
 
   const endAudio = useRef(new Audio(endChime));
 
