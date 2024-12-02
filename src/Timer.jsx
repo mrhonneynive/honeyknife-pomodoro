@@ -3,8 +3,9 @@ import BreakIdeas from "./BreakIdea";
 import Affirmations from "./Affirmations";
 
 const Timer = () => {
-  const workDuration = 1 * 6;
-  const breakDuration = 1 * 6;
+  // during dev era
+  const workDuration = 10 * 60;
+  const breakDuration = 10 * 60;
 
   const endAudio = useRef(new Audio("../public/deathChime.mp3"));
 
@@ -136,6 +137,7 @@ const Timer = () => {
 
   return (
     <div className="flex flex-col items-center p-4">
+      <div className="mt-2 text-m">EU BI ESH</div>
       {/* timer display */}
       <div className="mt-2 text-xl">{isWork ? "Work Time" : "Break Time"}</div>
       <div className="text-4xl font-mono">
