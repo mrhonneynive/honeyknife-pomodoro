@@ -7,7 +7,7 @@ const Timer = () => {
   const workDuration = 10 * 60;
   const breakDuration = 10 * 60;
 
-  const endAudio = useRef(new Audio("../public/deathChime.mp3"));
+  const endAudio = useRef(new Audio("/deathChime.mp3"));
 
   const breakIdeas = {
     Physical: [
