@@ -1,6 +1,4 @@
-import { useState } from "react";
 import Timer from "./Timer";
-import BreakIdeas from "./BreakIdea";
 
 const App = () => {
   return (
