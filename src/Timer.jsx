@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import BreakIdeas from "./BreakIdea";
 import Affirmations from "./Affirmations";
 
 const Timer = () => {
   const workDuration = 1 * 6;
   const breakDuration = 1 * 6;
+
+  const endAudio = useRef(new Audio("../public/deathChime.mp3"));
 
   const breakIdeas = {
     Physical: [
@@ -76,7 +78,9 @@ const Timer = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [isWork, setIsWork] = useState(true);
   const [breakIdea, setBreakIdea] = useState("");
-  const [selectedAffirmations, setSelectedAffirmations] = useState([]);
+  const [selectedAffirmations, setSelectedAffirmations] = useState(
+    getRandomAffirmations()
+  );
 
   useEffect(() => {
     let timer;
@@ -100,6 +104,7 @@ const Timer = () => {
                 ideas[Math.floor(Math.random() * ideas.length)];
               setBreakIdea(`${randomCategory}: ${randomIdea}`);
 
+              endAudio.current.play();
               return breakDuration;
             } else {
               setIsWork(true);
@@ -108,6 +113,7 @@ const Timer = () => {
 
               setSelectedAffirmations(getRandomAffirmations());
 
+              endAudio.current.play();
               return workDuration;
             }
           }
@@ -156,13 +162,13 @@ const Timer = () => {
       </div>
       {/* buttons */}
 
-      {/* break ideas */}
+      {/* break ideas & affirmations*/}
       {!isWork ? (
         <BreakIdeas idea={breakIdea} />
       ) : (
         <Affirmations affirmations={selectedAffirmations} />
       )}
-      {/* break ideas */}
+      {/* break ideas & affirmations*/}
     </div>
   );
 };
