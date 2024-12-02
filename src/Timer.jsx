@@ -18,23 +18,19 @@ const Timer = () => {
           } else {
             setIsRunning(false);
             setIsWork(!isWork);
-            if (isWork) {
-              return workDuration;
-            } else {
-              return breakDuration;
-            }
+            return isWork ? breakDuration : workDuration;
           }
         });
       }, 1000);
     }
     return () => clearInterval(timer);
-  }, [isRunning]);
+  }, [isRunning, isWork]);
 
-  const startTimer = () => setIsRunning(true);
-  const pauseTimer = () => setIsRunning(false);
+  const toggleTimer = () => setIsRunning(!isRunning);
   const resetTimer = () => {
-    setTimeLeft(workDuration);
     setIsRunning(false);
+    setTimeLeft(workDuration);
+    setIsWork(true);
   };
 
   const minutes = Math.floor(timeLeft / 60);
@@ -48,22 +44,18 @@ const Timer = () => {
 
       <div className="mt-4">
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-          onClick={startTimer}
+          className={`${
+            isRunning ? "bg-red-500" : "bg-blue-500"
+          } text-white px-4 py-2 rounded mr-2`}
+          onClick={toggleTimer}
         >
-          Start
-        </button>
-        <button
-          className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-          onClick={pauseTimer}
-        >
-          Stop
+          {isRunning ? "Stop" : "Start"}
         </button>
         <button
           className="bg-yellow-500 text-white px-4 py-2 rounded mr-2"
           onClick={resetTimer}
         >
-          Pause
+          Reset
         </button>
       </div>
     </div>
