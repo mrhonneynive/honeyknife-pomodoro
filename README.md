@@ -6,3 +6,6 @@
 - [x] endChime
 - [x] deploy
 - [ ] google tasks api -> first task from the oneThing
+
+npm run build
+npm run deploy

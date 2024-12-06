@@ -5,8 +5,8 @@ import endChime from "../public/deathChime.mp3";
 
 const Timer = () => {
   // during dev era
-  const workDuration = 10 * 60;
-  const breakDuration = 1 * 60;
+  const workDuration = 1 * 6;
+  const breakDuration = 1 * 1;
 
   const endAudio = useRef(new Audio(endChime));
 
@@ -85,45 +85,43 @@ const Timer = () => {
   );
 
   useEffect(() => {
-    let timer;
-    if (isRunning) {
-      timer = setInterval(() => {
-        setTimeLeft((previousTime) => {
-          if (previousTime > 0) {
-            return previousTime - 1;
-          } else {
-            setIsRunning(false);
+    if (!isRunning) return;
 
-            if (isWork) {
-              setIsWork(false);
+    const startTime = Date.now();
+    const targetTime = startTime + timeLeft * 1000;
 
-              const randomCategory =
-                breakCategories[
-                  Math.floor(Math.random() * breakCategories.length)
-                ];
-              const ideas = breakIdeas[randomCategory];
-              const randomIdea =
-                ideas[Math.floor(Math.random() * ideas.length)];
-              setBreakIdea(`${randomCategory}: ${randomIdea}`);
+    const timer = setInterval(() => {
+      const currentTime = Date.now();
+      const remainingTime = Math.max(
+        Math.floor((targetTime - currentTime) / 1000),
+        0
+      );
 
-              endAudio.current.play();
-              return breakDuration;
-            } else {
-              setIsWork(true);
+      setTimeLeft(remainingTime);
 
-              setBreakIdea("");
+      if (remainingTime <= 0) {
+        clearInterval(timer);
+        setIsRunning(false);
+        if (isWork) {
+          setIsWork(false);
+          setTimeLeft(breakDuration);
 
-              setSelectedAffirmations(getRandomAffirmations());
+          const randomCategory =
+            breakCategories[Math.floor(Math.random() * breakCategories.length)];
+          const ideas = breakIdeas[randomCategory];
+          const randomIdea = ideas[Math.floor(Math.random() * ideas.length)];
+          setBreakIdea(`${randomCategory}: ${randomIdea}`);
+        } else {
+          setIsWork(true);
+          setTimeLeft(workDuration);
+          setSelectedAffirmations(getRandomAffirmations());
+        }
+        endAudio.current.play();
+      }
+    }, 1000);
 
-              endAudio.current.play();
-              return workDuration;
-            }
-          }
-        });
-      }, 1000);
-    }
     return () => clearInterval(timer);
-  }, [isRunning, isWork]);
+  }, [isRunning, isWork, timeLeft]);
 
   const toggleTimer = () => setIsRunning(!isRunning);
   const resetTimer = () => {
