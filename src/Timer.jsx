@@ -121,7 +121,7 @@ const Timer = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isRunning, isWork, timeLeft]);
+  }, [isRunning, isWork]);
 
   const toggleTimer = () => setIsRunning(!isRunning);
   const resetTimer = () => {
